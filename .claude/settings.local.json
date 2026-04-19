@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@14 . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --no-eslint)",
+      "Bash(npx create-next-app@14 . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --no-eslint --skip-install)",
+      "Bash(npx create-next-app@14 flashscore-booking --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --no-eslint)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" http://localhost:3000/)",
+      "Bash(unzip -l \"/Users/jakub.riha/Downloads/Flash Display & FS Numbers \\(otf, ttf, woff, woff2\\).zip\")",
+      "Bash(unzip -j \"/Users/jakub.riha/Downloads/Flash Display & FS Numbers \\(otf, ttf, woff, woff2\\).zip\" \"*.woff2\" \"*.woff\")"
+    ]
+  }
+}

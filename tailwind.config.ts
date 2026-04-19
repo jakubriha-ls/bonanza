@@ -9,8 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        "fs-red": "#FF0046",
+        "fs-slate": "#001E28",
+        "fs-slate-light": "#0F2D37",
+        "fs-slate-dark": "#00141E",
+        "fs-white": "#FFFFFF",
+        "fs-chalk": "#EEEEEE",
+        "fs-gray-1": "#C8CDCD",
+        "fs-gray-2": "#999999",
+        "fs-gray-3": "#555E61",
+      },
+      fontFamily: {
+        flash: ['"Flash Display"', "sans-serif"],
+        fs: ['"FS Numbers"', "sans-serif"],
       },
     },
   },
