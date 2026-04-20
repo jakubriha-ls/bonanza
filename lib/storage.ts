@@ -27,12 +27,17 @@ export async function saveBooking(data: BookingData): Promise<void> {
     data.notes,
   ];
 
-  await sheets.spreadsheets.values.append({
-    spreadsheetId: process.env.GOOGLE_SHEET_ID,
-    range: "form!A:O",
-    valueInputOption: "RAW",
-    requestBody: {
-      values: [row],
-    },
-  });
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error("Sheets API timeout after 15s")), 15000)
+  );
+
+  await Promise.race([
+    sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      range: "form!A:P",
+      valueInputOption: "RAW",
+      requestBody: { values: [row] },
+    }),
+    timeout,
+  ]);
 }

@@ -2,10 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { saveBooking } from "@/lib/storage";
 import type { BookingData } from "@/lib/types";
 
-export async function POST(request: NextRequest) {
-  const data: BookingData = await request.json();
+export const dynamic = "force-dynamic";
+export const maxDuration = 30;
 
-  // Basic validation of required fields
+export async function POST(request: NextRequest) {
+  let data: BookingData;
+  try {
+    data = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
   const required: (keyof BookingData)[] = [
     "terminFrom",
     "terminTo",
@@ -25,7 +32,12 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  await saveBooking(data);
+  try {
+    await saveBooking(data);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to save booking";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 
   return NextResponse.json({ success: true });
 }
