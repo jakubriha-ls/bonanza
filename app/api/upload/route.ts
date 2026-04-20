@@ -26,8 +26,12 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const url = await uploadFile(buffer, file.name, file.type);
-
-  return NextResponse.json({ url });
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const url = await uploadFile(buffer, file.name, file.type);
+    return NextResponse.json({ url });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Upload failed";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }

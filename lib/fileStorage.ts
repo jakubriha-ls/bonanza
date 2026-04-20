@@ -22,17 +22,18 @@ export async function uploadFile(
       body: stream,
     },
     fields: "id",
+    supportsAllDrives: true,
   });
 
   const fileId = uploadRes.data.id!;
 
-  // Make the file publicly readable via link
   await drive.permissions.create({
     fileId,
     requestBody: {
       type: "anyone",
       role: "reader",
     },
+    supportsAllDrives: true,
   });
 
   return `https://drive.google.com/uc?id=${fileId}`;

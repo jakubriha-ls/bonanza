@@ -58,20 +58,27 @@ export default function BookingForm() {
     reader.readAsDataURL(file);
 
     setUploadingImage(true);
-    const fd = new FormData();
-    fd.append("file", file);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
 
-    const res = await fetch("/api/upload", { method: "POST", body: fd });
-    const json = await res.json();
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const json = await res.json();
 
-    if (res.ok) {
-      set("imageUrl", json.url);
-    } else {
-      setErrors((prev) => ({ ...prev, imageUrl: json.error || "Upload failed" }));
+      if (res.ok) {
+        set("imageUrl", json.url);
+      } else {
+        setErrors((prev) => ({ ...prev, imageUrl: json.error || "Upload failed" }));
+        setPreviewImageSrc("");
+        set("imageUrl", "");
+      }
+    } catch {
+      setErrors((prev) => ({ ...prev, imageUrl: "Upload failed. Please try again." }));
       setPreviewImageSrc("");
       set("imageUrl", "");
+    } finally {
+      setUploadingImage(false);
     }
-    setUploadingImage(false);
   }
 
   function validate(): boolean {
@@ -97,17 +104,22 @@ export default function BookingForm() {
     setFormState("loading");
     setErrorMessage("");
 
-    const res = await fetch("/api/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    if (res.ok) {
-      setFormState("success");
-    } else {
-      const json = await res.json();
-      setErrorMessage(json.error || "Submission failed. Please try again.");
+      if (res.ok) {
+        setFormState("success");
+      } else {
+        const json = await res.json();
+        setErrorMessage(json.error || "Submission failed. Please try again.");
+        setFormState("error");
+      }
+    } catch {
+      setErrorMessage("Network error. Please try again.");
       setFormState("error");
     }
   }
