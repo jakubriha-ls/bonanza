@@ -92,7 +92,7 @@ export default function CalendarPicker({ from, to, onChange, errorFrom, errorTo 
   }
 
   return (
-    <div className="bg-fs-slate-light rounded-xl p-4 select-none">
+    <div className="bg-fs-slate rounded-xl p-4 select-none border border-white/10">
       {/* Month navigation */}
       <div className="flex items-center justify-between mb-3">
         <button
@@ -118,7 +118,7 @@ export default function CalendarPicker({ from, to, onChange, errorFrom, errorTo 
       <div className="grid grid-cols-[1.5rem_repeat(7,1fr)] mb-1">
         <div />
         {DAYS.map((d) => (
-          <div key={d} className="text-center text-fs-gray-3 text-xs font-fs py-1">
+          <div key={d} className="text-center text-fs-gray-2 text-xs font-fs py-1">
             {d}
           </div>
         ))}
@@ -128,7 +128,7 @@ export default function CalendarPicker({ from, to, onChange, errorFrom, errorTo 
       {weeks.map((week) => (
         <div key={week.weekNum} className="grid grid-cols-[1.5rem_repeat(7,1fr)]">
           {/* Week number */}
-          <div className="flex items-center justify-center text-fs-gray-3 text-xs font-fs">
+          <div className="flex items-center justify-center text-fs-gray-2 text-xs font-fs">
             {week.weekNum}
           </div>
 
@@ -192,24 +192,24 @@ export default function CalendarPicker({ from, to, onChange, errorFrom, errorTo 
       ))}
 
       {/* Selected range summary */}
-      <div className="mt-3 pt-3 border-t border-fs-slate">
+      <div className="mt-3 pt-3 border-t border-white/10">
         <div className="flex items-center gap-2 text-xs font-fs">
           <div className={`flex-1 ${errorFrom ? "text-fs-red" : ""}`}>
-            <span className="text-fs-gray-3">From  </span>
+            <span className="text-fs-gray-2">From  </span>
             {from ? (
               <span className="text-white">{fmtDate(from)}</span>
             ) : (
-              <span className="text-fs-gray-3 italic">not selected</span>
+              <span className="text-fs-gray-2 italic">not selected</span>
             )}
             {errorFrom && <p className="text-fs-red mt-0.5">{errorFrom}</p>}
           </div>
-          <div className="text-fs-gray-3">→</div>
+          <div className="text-fs-gray-2">→</div>
           <div className={`flex-1 ${errorTo ? "text-fs-red" : ""}`}>
-            <span className="text-fs-gray-3">To  </span>
+            <span className="text-fs-gray-2">To  </span>
             {to ? (
               <span className="text-white">{fmtDate(to)}</span>
             ) : (
-              <span className="text-fs-gray-3 italic">not selected</span>
+              <span className="text-fs-gray-2 italic">not selected</span>
             )}
             {errorTo && <p className="text-fs-red mt-0.5">{errorTo}</p>}
           </div>

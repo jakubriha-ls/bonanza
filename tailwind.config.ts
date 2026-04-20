@@ -18,6 +18,7 @@ const config: Config = {
         "fs-gray-1": "#C8CDCD",
         "fs-gray-2": "#999999",
         "fs-gray-3": "#555E61",
+        "fs-input": "#1A3C4E",
       },
       fontFamily: {
         flash: ['"Flash Display"', "sans-serif"],

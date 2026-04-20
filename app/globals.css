@@ -29,6 +29,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: "FS Numbers", Arial, sans-serif;
+  color-scheme: dark;
 }
 
 @layer utilities {
