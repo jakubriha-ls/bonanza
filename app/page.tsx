@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, ChangeEvent, FormEvent } from "react";
+import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
 import type { BookingData } from "@/lib/types";
+import type { Booking } from "@/app/api/bookings/route";
 import CalendarPicker from "@/app/components/CalendarPicker";
 
 const USECASES = ["Legacy bookie", "New bookie", "Affil + fix", "Fix only"] as const;
@@ -34,6 +35,14 @@ export default function BookingForm() {
   const [previewImageSrc, setPreviewImageSrc] = useState<string>("");
   const [uploadingImage, setUploadingImage] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [allBookings, setAllBookings] = useState<Booking[]>([]);
+
+  useEffect(() => {
+    fetch("/api/bookings")
+      .then((r) => r.json())
+      .then((data) => setAllBookings(data))
+      .catch(() => {});
+  }, []);
 
   function set<K extends keyof BookingData>(key: K, value: BookingData[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -112,6 +121,16 @@ export default function BookingForm() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
+  const conflicts: Booking[] =
+    form.terminFrom && form.terminTo && form.projectCountry
+      ? allBookings.filter(
+          (b) =>
+            b.country.trim().toLowerCase() === form.projectCountry.trim().toLowerCase() &&
+            b.from <= form.terminTo &&
+            b.to >= form.terminFrom
+        )
+      : [];
+
   const inputBase =
     "w-full bg-fs-input border rounded-lg px-3.5 py-2.5 text-white font-fs text-sm placeholder-fs-gray-2/60 focus:outline-none transition-colors appearance-none";
   const inputOk = "border-white/15 focus:border-white/40";
@@ -181,6 +200,34 @@ export default function BookingForm() {
                   errorTo={errors.terminTo}
                 />
               </div>
+
+            {/* Conflict check */}
+            {form.terminFrom && form.terminTo && form.projectCountry && (
+              <div className={`rounded-lg px-4 py-3 text-xs font-fs ${
+                conflicts.length > 0
+                  ? "bg-amber-400/10 border border-amber-400/40"
+                  : "bg-green-500/10 border border-green-500/30"
+              }`}>
+                {conflicts.length === 0 ? (
+                  <span className="text-green-400">✓ No conflicts for {form.projectCountry} in this period</span>
+                ) : (
+                  <>
+                    <p className="text-amber-400 font-medium mb-2">
+                      ⚠ {conflicts.length} existing booking{conflicts.length > 1 ? "s" : ""} in {form.projectCountry}:
+                    </p>
+                    <div className="space-y-1">
+                      {conflicts.map((b, i) => (
+                        <div key={i} className="flex items-center gap-3 text-amber-200/80">
+                          <span className="font-medium text-white/90">{b.bookie || "—"}</span>
+                          <span>{b.from} – {b.to}</span>
+                          <span className="text-white/40">{b.status}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
