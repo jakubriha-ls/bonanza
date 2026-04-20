@@ -454,7 +454,7 @@ export default function BookingForm() {
 
             <button
               type="submit"
-              disabled={formState === "loading" || uploadingImage}
+              disabled={formState === "loading"}
               className="w-full bg-fs-red text-white font-flash font-bold uppercase tracking-wider py-3.5 rounded-xl text-sm hover:opacity-90 active:scale-[0.99] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {formState === "loading" ? <><Spinner /> Submitting…</> : "Book Campaign"}

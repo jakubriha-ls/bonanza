@@ -12,7 +12,8 @@
       "Bash(unzip -j \"/Users/jakub.riha/Downloads/Flash Display & FS Numbers \\(otf, ttf, woff, woff2\\).zip\" \"*.woff2\" \"*.woff\")",
       "Bash(curl -s -X POST http://localhost:3000/api/upload -F 'file=@/System/Library/Desktop Pictures/Sonoma.heic;type=image/jpeg')",
       "Bash(python3 -c ' *)",
-      "Bash(curl -s -X POST http://localhost:3000/api/upload -F \"file=@/tmp/test.png;type=image/png\")"
+      "Bash(curl -s -X POST http://localhost:3000/api/upload -F \"file=@/tmp/test.png;type=image/png\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/submit -H 'Content-Type: application/json' -d '{\"terminFrom\":\"2026-04-21\",\"terminTo\":\"2026-04-25\",\"bookie\":\"Bet365\",\"projectCountry\":\"CZ\",\"usecase\":\"Legacy bookie\",\"worldCup2026\":false,\"headline\":\"test\",\"description\":\"test\",\"ctaButtonText\":\"test\",\"iosTrackingId\":\"\",\"andTrackingId\":\"\",\"iosLink\":\"https://seznam.cz\",\"andLink\":\"https://seznam.cz\",\"imageUrl\":\"\",\"notes\":\"\"}')"
     ]
   }
 }
